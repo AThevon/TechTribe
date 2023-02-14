@@ -1,10 +1,10 @@
 import './Reset.css';
 import './App.css';
-import Header from './components/Header.js'
-import Aside from './components/Aside.js'
-import Feed from './components/Feed.js'
-import Input from './components/Input.js'
-import Slider from './components/Slider.js'
+import Header from './components/Header.jsx'
+import Aside from './components/Aside.jsx'
+import Feed from './components/Feed.jsx'
+import Input from './components/Input.jsx'
+import Slider from './components/Slider.jsx'
 
 function App() {
   return (
