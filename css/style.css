@@ -43,6 +43,7 @@ section.main-section {
     gap: 1rem;
     padding-inline: 3rem;
     padding-bottom: 1.5rem;
+    overflow: hidden;
 }
 
 aside,
@@ -274,24 +275,23 @@ section.sending-section {
 
 /* SETTING DU FEED */
 
+.feed-section {
+    overflow-x: auto;
+}
+
 .main-feed {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    /* overflow: auto; */
-    overflow: hidden;
-
+    overflow-y: auto;
 }
 
 .feed-container {
     border-radius: 15px;
     margin: .2rem .5rem;
     background-color: #232323;
-    /* width: 30rem; */
-    width: 100%;
-    /* height: 100%; */
 }
 
 .user-container {
