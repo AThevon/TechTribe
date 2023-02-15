@@ -1,70 +1,110 @@
+// API
+const urlApi = "http://touiteur.cefim-formation.org/"
+
+// SETTING DE L'INPUT
+const sendBtn = document.querySelector('.send-btn');
+const pseudoInput = document.getElementById('pseudoInput');
+const textInput = document.getElementById('textInput');
+
+sendBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const message = {
+        name: pseudoInput.value,
+        message: textInput.value
+    };
+
+    fetch(urlApi + 'send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.error(error));
+});
+
+
 // SETTING DU FEED
 const mainFeed = document.querySelector('.main-feed');
 
-fetch('http://touiteur.cefim-formation.org/list')
-    .then(response => response.json())
-    .then(data => {
-        data.messages.forEach(message => {
-            const li = document.createElement('li');
-            li.classList.add('feed-container');
+getAndDisplayMessages();
 
-            const userContainer = document.createElement('div');
-            userContainer.classList.add('user-container');
+function getAndDisplayMessages() {
+    getMessages();
+    async function getMessages() {
+        try {
+            const response = await fetch(urlApi + "list");
+            const data = await response.json();
+            data.messages.forEach((message) => {
+                const li = document.createElement('li');
+                li.classList.add('feed-container');
 
-            const userImg = document.createElement('img');
-            userImg.setAttribute('src', 'img/user-solid.svg');
-            userImg.setAttribute('alt', '');
-            userImg.classList.add('pp-friend');
-            userContainer.appendChild(userImg);
+                const userContainer = document.createElement('div');
+                userContainer.classList.add('user-container');
 
-            const userName = document.createElement('p');
-            userName.classList.add('name-author');
-            const userNameText = document.createTextNode(message.name);
-            userName.appendChild(userNameText);
-            userContainer.appendChild(userName);
+                const userImg = document.createElement('img');
+                userImg.setAttribute('src', 'img/user-solid.svg');
+                userImg.setAttribute('alt', '');
+                userImg.classList.add('pp-friend');
+                userContainer.appendChild(userImg);
 
-            li.appendChild(userContainer);
+                const userName = document.createElement('p');
+                userName.classList.add('name-author');
+                const userNameText = document.createTextNode(message.name);
+                userName.appendChild(userNameText);
+                userContainer.appendChild(userName);
 
-            const messageText = document.createElement('p');
-            messageText.classList.add('text-author');
-            const messageTextContent = document.createTextNode(message.message);
-            messageText.appendChild(messageTextContent);
-            li.appendChild(messageText);
+                li.appendChild(userContainer);
 
-            const iconsPost = document.createElement('ul');
-            iconsPost.classList.add('icons-post');
+                const messageText = document.createElement('p');
+                messageText.classList.add('text-author');
+                const messageTextContent = document.createTextNode(message.message);
+                messageText.appendChild(messageTextContent);
+                li.appendChild(messageText);
 
-            const likeBtn = document.createElement('li');
-            likeBtn.innerHTML = '<img src="#" alt="" id="likeBtn" class="emote" />';
-            iconsPost.appendChild(likeBtn);
+                const iconsPost = document.createElement('ul');
+                iconsPost.classList.add('icons-post');
 
-            const loveBtn = document.createElement('li');
-            loveBtn.innerHTML = '<img src="#" alt="" id="loveBtn" class="emote" />';
-            iconsPost.appendChild(loveBtn);
+                const likeBtn = document.createElement('li');
+                likeBtn.innerHTML = '<img src="#" alt="" id="likeBtn" class="emote" />';
+                iconsPost.appendChild(likeBtn);
 
-            const laughBtn = document.createElement('li');
-            laughBtn.innerHTML = '<img src="#" alt="" id="laughBtn" class="emote" />';
-            iconsPost.appendChild(laughBtn);
+                const loveBtn = document.createElement('li');
+                loveBtn.innerHTML = '<img src="#" alt="" id="loveBtn" class="emote" />';
+                iconsPost.appendChild(loveBtn);
 
-            const surpriseBtn = document.createElement('li');
-            surpriseBtn.innerHTML = '<img src="#" alt="" id="surpriseBtn" class="emote" />';
-            iconsPost.appendChild(surpriseBtn);
+                const laughBtn = document.createElement('li');
+                laughBtn.innerHTML = '<img src="#" alt="" id="laughBtn" class="emote" />';
+                iconsPost.appendChild(laughBtn);
 
-            const angryBtn = document.createElement('li');
-            angryBtn.innerHTML = '<img src="#" alt="" id="angryBtn" class="emote" />';
-            iconsPost.appendChild(angryBtn);
+                const surpriseBtn = document.createElement('li');
+                surpriseBtn.innerHTML = '<img src="#" alt="" id="surpriseBtn" class="emote" />';
+                iconsPost.appendChild(surpriseBtn);
 
-            const commentBtn = document.createElement('li');
-            commentBtn.innerHTML = '<img src="#" alt="" id="commentBtn" class="emote" />';
-            iconsPost.appendChild(commentBtn);
+                const angryBtn = document.createElement('li');
+                angryBtn.innerHTML = '<img src="#" alt="" id="angryBtn" class="emote" />';
+                iconsPost.appendChild(angryBtn);
 
-            li.appendChild(iconsPost);
+                const commentBtn = document.createElement('li');
+                commentBtn.innerHTML = '<img src="#" alt="" id="commentBtn" class="emote" />';
+                iconsPost.appendChild(commentBtn);
 
-            mainFeed.appendChild(li);
-        });
-    })
+                li.appendChild(iconsPost);
 
-    .catch(error => console.error(error));
+                mainFeed.appendChild(li);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
+    setInterval(() => {
+        getMessages();
+    }, 300000);
+}
 
-    

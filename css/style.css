@@ -86,10 +86,11 @@ section.feed-section {
 header {
     width: 100%;
     height: 7rem;
-    padding-inline: 4rem;
+    padding-left: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
 }
 
 /* logo */
@@ -215,7 +216,7 @@ img.pp-friend {
 }
 
 .btn-chat-friend {
-    background-image: url(../src/assets/comment-solid.svg);
+    background-image: url(../img/comment-solid.svg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -224,8 +225,6 @@ img.pp-friend {
 }
 
 .main-mp {
-    /* position: absolute; */
-    /* bottom: 0; */
     display: grid;
     grid-template-columns: 5fr 1fr;
 }
@@ -249,12 +248,17 @@ section.sending-section {
 #pseudoInput {
     background-color: #49494950;
     border-radius: 15px 15px 0 0;
+    padding-inline: 1rem;
+    font-weight: 600;
+    text-align: center;
 }
 
 #textInput {
+    font-weight: 300;
     background-color: #49494950;
     resize: none;
     overflow: auto;
+    padding: .4rem 1rem;
 }
 
 #pseudoInput:active,
@@ -269,23 +273,22 @@ section.sending-section {
 .send-btn {
     background-color: #49494950;
     border-radius: 0 0 15px 15px;
+    cursor: pointer;
+    font-weight: 700;
     
+}
+.send-btn:hover {
+    background-color: #49494920;
 }
 
 
 /* SETTING DU FEED */
 
-.feed-section {
-    overflow-x: auto;
-}
-
 .main-feed {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .feed-container {
