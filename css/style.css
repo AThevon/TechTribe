@@ -51,6 +51,7 @@ section.sending-section,
 section.features-section,
 section.feed-section {
     border-radius: 15px;
+    background-color: #23232399;
 }
 
 .main-header {
@@ -61,13 +62,12 @@ section.feed-section {
 aside.main-aside {
     grid-column: 1 / 2;
     grid-row: 2 / 4;
-    background-color: #23232350;
 }
 
 section.features-section {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
-    background-color: rgb(84, 21, 152);
+    background-color: #23232300;
 }
 
 section.sending-section {
@@ -79,7 +79,6 @@ section.sending-section {
 section.feed-section {
     grid-column: 3 / 4;
     grid-row: 2 / 4;
-    background-color: #23232399;
 }
 
 /* SETTING DU HEADER */
@@ -127,6 +126,7 @@ a.nav-link {
     background-color: #f9f9f930;
     border-radius: 20px;
     font-size: 1rem;
+    transition: .3s;
 }
 
 a.nav-link:hover {
@@ -158,7 +158,21 @@ aside.main-aside {
     font-weight: 300;
     font-size: 1.5;
     padding-left: 1.5rem;
+    position: relative;
 }
+
+
+.title-aside p::before {
+    content: '';
+    width: .5rem;
+    height: .5rem;
+    position: absolute;
+    left: .5rem;
+    top: .5rem;
+    border-radius: 50%;
+    background-color: green;
+}
+
 
 /* groupe de boutton aside */
 ul.navbar-aside {
@@ -190,7 +204,7 @@ li.friend {
     align-items: center;
     justify-content: space-between;
     border-radius: 25px;
-    padding: .2rem 1rem;
+    padding: 1rem 1rem;
     background-color: #48484875;
 }
 
@@ -207,37 +221,100 @@ img.pp-friend {
     font-size: 1.1rem;
     font-weight: 500;
     line-height: 1;
-    margin-inline: 2rem 1rem;
+    margin-left: 1rem;
 }
 
 .text-friend span{
     font-size: 1rem;
     font-weight: 300;
+    position: relative;
+    padding-left: 1.5rem;
 }
 
-.btn-chat-friend {
-    background-image: url(../img/comment-solid.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 3rem;
-    height: 3rem;
+.text-friend span::before{
+        content: '';
+        width: .5rem;
+        height: .5rem;
+        position: absolute;
+        left: .5rem;
+        top: .4rem;
+        border-radius: 50%;
+        background-color: green;
+}
+
+.text-friend.offline span::before{
+        content: '';
+        background-color: rgb(186, 0, 0);
 }
 
 .main-mp {
     display: grid;
     grid-template-columns: 5fr 1fr;
+    background-color: #484848;
+    border-radius: 50px;
+    -webkit-box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.5);
+    overflow: hidden;
 }
 
 button.btn-send-mp {
     background-color: #48484875;
-    border-radius: 0 0 0 15px;
+    border-radius: 50px 0 0 50px;
     margin: 0;
     padding: 0;
     min-height: 100%;
     border: none;
     outline: none;
+    cursor: pointer;
 }
+
+button.btn-send-mp:hover {
+    background-color: #232323;
+}
+
+figure.btn-status {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: green;
+    margin: auto;
+    cursor: pointer;
+    transition: .2s;
+    scale: 2;
+}
+figure.btn-status:hover {
+    -webkit-box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.5);
+    border-radius: 50%;
+    scale: 1;
+    width: 3rem;
+    height: 3rem;
+}
+
+
+
+/* SETTING DES FEATURES */
+ul.main-container-features {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    gap: 1rem;
+}
+
+li.container-features {
+    border-radius: 15px;
+    padding: 1.5rem;
+    background-color: #232323;
+}
+
+.title-features {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
 
 /* SETTING DE L'INPUT */
 section.sending-section {
@@ -283,12 +360,12 @@ section.sending-section {
 
 
 /* SETTING DU FEED */
-
 .main-feed {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+
 }
 
 .feed-container {
@@ -332,9 +409,9 @@ ul.icons-post {
     overflow: hidden;
 }
 
-/* .feed-container:hover ul.icons-post {
+.feed-container:hover ul.icons-post {
     height: 3rem;
-} */
+}
 
 .emote {
     width: 1.6rem;
@@ -344,6 +421,7 @@ ul.icons-post {
     opacity: 0;
     transition: .2s;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .feed-container:hover .emote {
@@ -352,5 +430,5 @@ ul.icons-post {
 }
 
 .emote:hover {
-    scale: 1.1;
+    scale: 1.3;
 }
