@@ -1,5 +1,5 @@
 // API
-const urlApi = "http://touiteur.cefim-formation.org/"
+const urlApi = "https://touiteur.cefim-formation.org/"
 
 // SETTING DES TRENDINGS
 const ulTrending = document.querySelector('.title-trending');
@@ -51,21 +51,26 @@ const sendBtn = document.querySelector('.send-btn');
 const pseudoInput = document.getElementById('pseudoInput');
 const textInput = document.getElementById('textInput');
 
-sendBtn.addEventListener('click', (event) => {
-    event.preventDefault();
 
-    const message = {
-        name: pseudoInput.value,
-        message: textInput.value
-    };
+sendBtn.addEventListener('click', () => {
+    if (pseudoInput.value == '' || textInput.value == '' )  { 
+        alert('Typing Error, fields are empty !');
+    } else if (pseudoInput.value.length < 3 || pseudoInput.value.length > 16) { 
+        alert('Typing Error, pseudo must be between 3 and 16 caracters');
 
-    fetch(urlApi + 'send', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(message)
-    })
+    } else if (textInput.value.length < 3  || textInput.value.length > 256) {
+        alert('Typing Error, message must be between 3 and 256 caracters');
+    } else {
+        name = pseudoInput.value,
+        message = textInput.value
+
+        fetch(urlApi + 'send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: "name=" + encodeURIComponent(name) + "&message=" + encodeURIComponent(message)
+        })
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -73,12 +78,17 @@ sendBtn.addEventListener('click', (event) => {
         .catch(error => {
             console.log(error);
         });
+        pseudoInput.value = '';
+        textInput.value = '';
+        
+    }
 });
 
 
 
 // SETTING DU FEED
 const mainFeed = document.querySelector('.main-feed');
+
 
 getAndDisplayMessages();
 
@@ -89,11 +99,8 @@ function getAndDisplayMessages() {
         try {
             const responseMessages = await fetch(urlApi + 'list');
             const dataMessages = await responseMessages.json();
-
-            const sortedMessages = dataMessages.messages.sort((a, b) => b.ts - a.ts);
-
-            const latestMessages = sortedMessages.slice(0, 20).reverse();
-
+            
+            const latestMessages = dataMessages.messages.reverse().slice(0, 10);
             mainFeed.innerHTML = '';
 
             latestMessages.forEach((message) => {
@@ -130,21 +137,29 @@ function getAndDisplayMessages() {
                 likeBtn.innerHTML = '<img src="img/icon-like.svg" alt="" id="likeBtn" class="emote" />';
                 iconsPost.appendChild(likeBtn);
 
-                const loveBtn = document.createElement('li');
-                loveBtn.innerHTML = '<img src="img/icon-heart.svg" alt="" id="loveBtn" class="emote" />';
-                iconsPost.appendChild(loveBtn);
+                const smileBtn = document.createElement('li');
+                smileBtn.innerHTML = '<img src="img/smile.svg" alt="" id="smileBtn" class="emote" />';
+                iconsPost.appendChild(smileBtn);
 
-                const laughBtn = document.createElement('li');
-                laughBtn.innerHTML = '<img src="img/icon-laugh.svg" alt="" id="laughBtn" class="emote" />';
-                iconsPost.appendChild(laughBtn);
+                const bigSmileBtn = document.createElement('li');
+                bigSmileBtn.innerHTML = '<img src="img/big-smile.svg" alt="" id="bigSmileBtn" class="emote" />';
+                iconsPost.appendChild(bigSmileBtn);
 
-                const surpriseBtn = document.createElement('li');
-                surpriseBtn.innerHTML = '<img src="img/icon-surprised.svg" alt="" id="surpriseBtn" class="emote" />';
-                iconsPost.appendChild(surpriseBtn);
+                const winkBtn = document.createElement('li');
+                winkBtn.innerHTML = '<img src="img/wink.svg" alt="" id="winkBtn" class="emote" />';
+                iconsPost.appendChild(winkBtn);
 
-                const angryBtn = document.createElement('li');
-                angryBtn.innerHTML = '<img src="img/icon-angry.svg" alt="" id="angryBtn" class="emote" />';
-                iconsPost.appendChild(angryBtn);
+                const glassesBtn = document.createElement('li');
+                glassesBtn.innerHTML = '<img src="img/glasses.svg" alt="" id="glassesBtn" class="emote" />';
+                iconsPost.appendChild(glassesBtn);
+
+                const winkTongBtn = document.createElement('li');
+                winkTongBtn.innerHTML = '<img src="img/wink-tong.svg" alt="" id="winkTongBtn" class="emote" />';
+                iconsPost.appendChild(winkTongBtn);
+
+                const prayBtn = document.createElement('li');
+                prayBtn.innerHTML = '<img src="img/pray.svg" alt="" id="prayBtn" class="emote" />';
+                iconsPost.appendChild(prayBtn);
 
                 const commentBtn = document.createElement('li');
                 commentBtn.innerHTML = '<img src="img/comment-solid.svg" alt="" id="commentBtn" class="emote" />';
@@ -155,18 +170,55 @@ function getAndDisplayMessages() {
 
                 mainFeed.appendChild(liMessage);
 
+            // SETTING DES EMOTES
+            //setting du like
+                
+                const emotes = document.querySelectorAll('.emote');
+                
+                emotes.forEach(emote => {
+                    emote.addEventListener('click', (e) => {
+                        if (e.currentTarget.id.includes('likeBtn')) {
+                            console.log('fdjkvhsdfjh')
+                        }
+                })
+                })
             });
 
-            const contentHeight = mainFeed.scrollHeight;
-            const visibleHeight = mainFeed.clientHeight;
-            mainFeed.scrollTop = contentHeight - visibleHeight;
+            // const contentHeight = mainFeed.scrollHeight;
+            // const visibleHeight = mainFeed.clientHeight;
+            // mainFeed.scrollTop = contentHeight - visibleHeight;
 
         } catch (error) {
             console.log(error);
         }
     }
-
     setInterval(() => {
         getMessages();
     }, 300000);
 }
+
+
+
+
+// likeBtn.addEventListener('click', () => {
+//     if (!likeBtn.classList.contains('like-active')) {
+//         async function sendLike() {
+//             fetch(urlApi + 'send/like', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded'
+//                 },
+//                 // body: 
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log(data);
+//             })
+//             .catch(error => {
+//                 console.log(error);
+//             });
+
+//         }
+
+//     }
+// })
